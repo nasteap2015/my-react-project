@@ -1,18 +1,38 @@
 // src/App.jsx
 
+import { useState } from 'react';
+
 const App = () => {
-	const handleClick = (evt) => {
-		console.log(evt);
+  const [values, setValues] = useState({
+    x: 0,
+    y: 0,
+	  });
+	
+	const updateX = () => {
+			setValues({
+			...values,
+			x: values.x + 1
+		});
 	};
 
-	return (
-		<>
-			<button onClick={handleClick}>First button</button>
-			<button onClick={evt => console.log(evt)}>Second button</button>
-		</>
-	);
-};
+	const updateY = () => {
+		setValues({
+			...values,
+			y: values.y + 1
+		});
+	};
 
+  return (
+    <div>
+      <p>
+        x: {values.x}, y: {values.y}
+      </p>
+
+      <button onClick={updateX}>Update x</button>
+      <button onClick={updateY}>Update y</button>
+    </div>
+  );
+};
 
 
 export default App;
