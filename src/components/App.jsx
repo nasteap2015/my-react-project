@@ -1,32 +1,31 @@
 // src/App.jsx
 
-import { useState, useEffect } from "react";
+import { useState, useId } from "react";
 
 const App = () => {
-  const [clicks, setClicks] = useState(() => {
-    const savedClicks = window.localStorage.getItem("saved-clicks");
-    if (savedClicks !== null) {
-      return savedClicks;
-    }
-    return 0;
-  });
+  const [hasAccepted, setHasAccepted] = useState(false);
 
-  useEffect(() => {
-    window.localStorage.setItem("saved-clicks", clicks);
-  }, [clicks]);
+  const handleChange = (evt) => {
+    setHasAccepted(evt.target.checked);
+  };
 
   return (
     <div>
-      <button onClick={() => setClicks(clicks + 1)}>
-        You clicked {clicks} times
+      <label>
+        <input
+          type="checkbox"
+          name="terms"
+          checked={hasAccepted}
+          onChange={handleChange}
+        />
+        I accept terms and conditions
+      </label>
+      <button type="button" disabled={!hasAccepted}>
+        Proceed
       </button>
-      <button onClick={() => setClicks(0)}>Reset</button>
     </div>
   );
 };
-
-
-
 
 
 export default App;
