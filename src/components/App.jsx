@@ -1,31 +1,40 @@
 // src/App.jsx
 
-import { useState, useId } from "react";
+import { useId } from "react";
+import { Formik, Form, Field } from "formik";
 
-const App = () => {
-  const [hasAccepted, setHasAccepted] = useState(false);
+const initialValues = {
+  username: "",
+  email: "",
+  message: ""
+};
 
-  const handleChange = (evt) => {
-    setHasAccepted(evt.target.checked);
+const FeedbackForm = () => {
+  const nameFieldId = useId();
+  const emailFieldId = useId();
+	const msgFieldId = useId();
+
+  const handleSubmit = (values, actions) => {
+    console.log(values);
+    actions.resetForm();
   };
 
   return (
-    <div>
-      <label>
-        <input
-          type="checkbox"
-          name="terms"
-          checked={hasAccepted}
-          onChange={handleChange}
-        />
-        I accept terms and conditions
-      </label>
-      <button type="button" disabled={!hasAccepted}>
-        Proceed
-      </button>
-    </div>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Form>
+        <label htmlFor={nameFieldId}>Username</label>
+        <Field type="text" name="username" id={nameFieldId} />
+
+        <label htmlFor={emailFieldId}>Email</label>
+        <Field type="email" name="email" id={emailFieldId} />
+
+				<label htmlFor={msgFieldId}>Message</label>
+        <Field as="checkbox" name="message" id={msgFieldId} rows="5" />
+
+        <button type="submit">Submit</button>
+      </Form>
+    </Formik>
   );
 };
 
-
-export default App;
+export default FeedbackForm;
